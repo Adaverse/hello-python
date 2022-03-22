@@ -12,21 +12,50 @@ spec:
   type: LoadBalancer
 
 
+# ---
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: hello-python
+#   # labels:
+#   #   app: hello-python
+# spec:
+#   replicas: 4
+#   selector:
+#     matchLabels:
+#       app: hello-python
+#       version: v1
+#   template:
+#     metadata:
+#       labels:
+#         app: hello-python
+#     spec:
+#       containers:
+#       - name: hello-python
+#         image: hello-python:latest
+#         imagePullPolicy: Never
+#         ports:
+#         - containerPort: 5000
+
 ---
-apiVersion: apps/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: hello-python
+  labels:
+    app: hello-python
 spec:
-  replicas: 4
+  replicas: 3
+  selector:
+    matchLabels:
+      app: hello-python-pod
   template:
     metadata:
       labels:
-        app: hello-python
+        app: hello-python-pod
     spec:
       containers:
-      - name: hello-python
-        image: hello-python:latest
-        imagePullPolicy: Never
+      - name: hello-python-pod
+        image: adaverse/hello-flask:latest
         ports:
         - containerPort: 5000
